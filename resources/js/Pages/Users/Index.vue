@@ -10,8 +10,8 @@ const props = defineProps({
 });
 
 const page = usePage();
-const successMessage = computed(() => page.props.flash.success);
-const errorMessage = computed(() => page.props.flash.error);
+const successMessage = computed(() => page.props.flash?.success);
+const errorMessage = computed(() => page.props.flash?.error);
 
 
 const breadcrumbItems = ref([
