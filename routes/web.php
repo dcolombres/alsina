@@ -37,6 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('staff', StaffController::class);
     Route::resource('clientes', ClienteController::class);
     Route::resource('bi_y_analitica', BiYAnaliticaController::class);
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::resource('users', \App\Http\Controllers\UserController::class);
+    });
 });
 
 require __DIR__.'/auth.php';

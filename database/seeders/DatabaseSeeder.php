@@ -13,17 +13,20 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
          public function run()
-        {
-            \App\Models\User::factory()->create([
-                'name' => 'Admin User',
-                'email' => 'admin@admin.com',
-                'password' => bcrypt('password'), // password
-            ]);
-    
-            $this->call([
-                ClienteSeeder::class,
-                StaffSeeder::class,
-                ProyectoSeeder::class,
-                BiYAnaliticaSeeder::class,
-            ]);
-        }}
+    {
+        $this->call(RolesAndPermissionsSeeder::class);
+
+        $user = \App\Models\User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('password'), // password
+        ]);
+        $user->assignRole('admin');
+
+        $this->call([
+            ClienteSeeder::class,
+            StaffSeeder::class,
+            ProyectoSeeder::class,
+            BiYAnaliticaSeeder::class,
+        ]);
+    }}

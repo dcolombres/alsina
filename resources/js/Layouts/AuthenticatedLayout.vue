@@ -47,6 +47,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('bi_y_analitica.index')" :active="route().current('bi_y_analitica.index')">
                                     BI y Analítica
                                 </NavLink>
+                                <NavLink v-if="$page.props.auth.roles.includes('admin')" :href="route('users.index')" :active="route().current('users.index')">
+                                    Usuarios
+                                </NavLink>
                             </div>
                         </div>
 
@@ -144,6 +147,9 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('bi_y_analitica.index')" :active="route().current('bi_y_analitica.index')">
                             BI y Analítica
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink v-if="$page.props.auth.roles.includes('admin')" :href="route('users.index')" :active="route().current('users.index')">
+                            Usuarios
                         </ResponsiveNavLink>
                     </div>
 
