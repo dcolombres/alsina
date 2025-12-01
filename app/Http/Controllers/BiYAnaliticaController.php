@@ -16,6 +16,7 @@ class BiYAnaliticaController extends Controller
     public function index(Request $request)
     {
         $bi_y_analitica = BiYAnalitica::query()
+            ->with('updatedByUser')
             ->when($request->input('search'), function ($query, $search) {
                 $query->where('nombre', 'like', "%{$search}%");
             })

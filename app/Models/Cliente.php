@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\UpdatedByTracker;
 
 class Cliente extends Model
 {
-    use HasFactory;
+    use HasFactory, UpdatedByTracker;
 
     protected $fillable = [
         'nombre', 'apellido', 'area', 'dependencia', 'origen', 'email', 'celular', 'equipo_trabajo'

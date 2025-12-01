@@ -19,7 +19,7 @@ class ProyectoController extends Controller
     public function index(Request $request)
     {
         $proyectos = Proyecto::query()
-            ->with('responsable')
+            ->with(['responsable', 'updatedByUser'])
             ->when($request->input('search'), function ($query, $search) {
                 $query->where('nombre', 'like', "%{$search}%")
                       ->orWhere('categoria', 'like', "%{$search}%");
@@ -74,7 +74,7 @@ class ProyectoController extends Controller
      */
     public function show(Proyecto $proyecto)
     {
-        $proyecto->load(['clientePrincipal', 'responsable', 'clientes', 'staff']);
+        $proyecto->load(['clientePrincipal', 'responsable', 'clientes', 'staff', 'updatedByUser']);
 
         return Inertia::render('Proyectos/Show', [
             'proyecto' => $proyecto

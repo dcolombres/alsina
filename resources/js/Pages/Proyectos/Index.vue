@@ -48,6 +48,12 @@ const getTierClass = (tier) => {
     return 'bg-green-100 text-green-800';
 };
 
+const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+};
+
 </script>
 
 <template>
@@ -81,6 +87,8 @@ const getTierClass = (tier) => {
                                         <th @click="sort('categoria')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Categoría</th>
                                         <th @click="sort('responsable_id')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Responsable</th>
                                         <th @click="sort('estado')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Estado</th>
+                                        <th @click="sort('updated_at')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Última Modificación</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Modificado por</th>
                                         <th scope="col" class="relative px-6 py-3">
                                             <span class="sr-only">Ver</span>
                                         </th>
@@ -116,12 +124,18 @@ const getTierClass = (tier) => {
                                                 {{ proyecto.estado }}
                                             </span>
                                         </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ formatDate(proyecto.updated_at) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ proyecto.updated_by_user ? proyecto.updated_by_user.name : 'Sistema' }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <Link :href="route('proyectos.show', proyecto.id)" class="text-indigo-600 hover:text-indigo-900">Ver</Link>
                                         </td>
                                     </tr>
                                     <tr v-if="proyectos.data.length === 0">
-                                        <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                                        <td colspan="8" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
                                             No se encontraron proyectos.
                                         </td>
                                     </tr>

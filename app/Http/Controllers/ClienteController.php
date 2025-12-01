@@ -16,7 +16,7 @@ class ClienteController extends Controller
     public function index()
     {
         return Inertia::render('Clientes/Index', [
-            'clientes' => Cliente::latest()->get(),
+            'clientes' => Cliente::with('updatedByUser')->latest()->paginate(25),
         ]);
     }
 
@@ -60,7 +60,7 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        $cliente->load(['proyectos', 'proyectosComoClientePrincipal']);
+        $cliente->load(['proyectos', 'proyectosComoClientePrincipal', 'updatedByUser']);
 
         return Inertia::render('Clientes/Show', [
             'cliente' => $cliente

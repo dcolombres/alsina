@@ -36,6 +36,12 @@ const formatArray = (value) => {
     return value || 'N/A';
 };
 
+const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+};
+
 </script>
 
 <template>
@@ -59,6 +65,9 @@ const formatArray = (value) => {
                             <div>
                                 <h3 class="text-2xl font-bold text-gray-800">{{ proyecto.nombre }}</h3>
                                 <p class="mt-1 text-sm text-gray-600">{{ proyecto.descripcion || 'Sin descripción.' }}</p>
+                                <p v-if="proyecto.updated_at" class="mt-2 text-xs text-gray-500">
+                                    Última modificación: {{ formatDate(proyecto.updated_at) }} por {{ proyecto.updated_by_user?.name || 'Sistema' }}
+                                </p>
                             </div>
                             <div class="flex space-x-2">
                                 <Link :href="route('proyectos.edit', proyecto.id)" class="bg-arg-azul hover:bg-arg-secundario text-white font-bold py-2 px-4 rounded">

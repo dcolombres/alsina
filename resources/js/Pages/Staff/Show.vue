@@ -15,6 +15,11 @@ const breadcrumbItems = ref([
 
 const formatBoolean = (value) => value ? 'Sí' : 'No';
 
+const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+};
 </script>
 
 <template>
@@ -37,6 +42,9 @@ const formatBoolean = (value) => value ? 'Sí' : 'No';
                             <div>
                                 <h3 class="text-2xl font-bold text-gray-800">{{ miembro.nombre_apellido }}</h3>
                                 <p class="mt-1 text-sm text-gray-600">{{ miembro.rol }} - {{ miembro.seniority }}</p>
+                                <p v-if="miembro.updated_at" class="mt-2 text-xs text-gray-500">
+                                    Última modificación: {{ formatDate(miembro.updated_at) }} por {{ miembro.updated_by_user?.name || 'Sistema' }}
+                                </p>
                             </div>
                             <div class="flex space-x-2">
                                 <Link :href="route('staff.edit', miembro.id)" class="bg-arg-azul hover:bg-arg-secundario text-white font-bold py-2 px-4 rounded">

@@ -32,6 +32,12 @@ const getRoleClass = (role) => {
     return 'bg-blue-100 text-blue-800';
 };
 
+const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+};
+
 </script>
 
 <template>
@@ -69,6 +75,8 @@ const getRoleClass = (role) => {
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Última Modificación</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Modificado por</th>
                                         <th scope="col" class="relative px-6 py-3">
                                             <span class="sr-only">Acciones</span>
                                         </th>
@@ -89,13 +97,19 @@ const getRoleClass = (role) => {
                                                 {{ user.roles[0].name }}
                                             </span>
                                         </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ formatDate(user.updated_at) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ user.updated_by_user ? user.updated_by_user.name : 'Sistema' }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <Link :href="route('users.edit', user.id)" class="text-indigo-600 hover:text-indigo-900 mr-4">Editar</Link>
                                             <button @click="deleteUser(user.id)" class="text-red-600 hover:text-red-900">Eliminar</button>
                                         </td>
                                     </tr>
                                     <tr v-if="users.data.length === 0">
-                                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                                        <td colspan="6" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
                                             No se encontraron usuarios.
                                         </td>
                                     </tr>

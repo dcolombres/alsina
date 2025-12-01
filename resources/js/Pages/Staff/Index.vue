@@ -33,6 +33,12 @@ const sort = (column) => {
         replace: true,
     });
 };
+
+const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
+    const date = new Date(dateString);
+    return date.toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+};
 </script>
 
 <template>
@@ -61,6 +67,8 @@ const sort = (column) => {
                                         <th @click="sort('rol')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Rol</th>
                                         <th @click="sort('tecnologia')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Tecnología Principal</th>
                                         <th @click="sort('contrato')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Contrato</th>
+                                        <th @click="sort('updated_at')" scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">Última Modificación</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Modificado por</th>
                                         <th scope="col" class="relative px-6 py-3">
                                             <span class="sr-only">Ver</span>
                                         </th>
@@ -83,12 +91,18 @@ const sort = (column) => {
                                                 {{ miembro.contrato }}
                                             </span>
                                         </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ formatDate(miembro.updated_at) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ miembro.updated_by_user ? miembro.updated_by_user.name : 'Sistema' }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <Link :href="route('staff.show', miembro.id)" class="text-indigo-600 hover:text-indigo-900">Ver</Link>
                                         </td>
                                     </tr>
                                     <tr v-if="staff.data.length === 0">
-                                        <td colspan="5" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
+                                        <td colspan="7" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
                                             No se encontró personal.
                                         </td>
                                     </tr>

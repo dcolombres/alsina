@@ -17,6 +17,7 @@ class StaffController extends Controller
     public function index(Request $request)
     {
         $staff = Staff::query()
+            ->with('updatedByUser')
             ->where('activo', true)
             ->when($request->input('search'), function ($query, $search) {
                 $query->where('nombres', 'like', "%{$search}%")
@@ -72,7 +73,7 @@ class StaffController extends Controller
      */
     public function show(Staff $staff)
     {
-        $staff->load('proyectos');
+        $staff->load('proyectos', 'updatedByUser');
 
         return Inertia::render('Staff/Show', [
             'miembro' => $staff,

@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\UpdatedByTracker;
 
 class Proyecto extends Model
 {
-    use HasFactory;
+    use HasFactory, UpdatedByTracker;
 
     protected $fillable = [
         'nombre', 'descripcion', 'origen', 'dependencia', 'tier', 'cliente_id', 'estado', 'categoria', 'subcategoria', 'responsable_id', 'observacion', 'urls', 'captura', 'nube', 'ticketera_interna', 'ticketera_externa', 'changelog', 'ano', 'usuarios_internos', 'usuarios_externos', 'versionado', 'vms', 'instrucciones_deploy', 'referente', 'notas_infraestructura',
