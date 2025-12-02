@@ -74,7 +74,7 @@ class ProyectoController extends Controller
      */
     public function show(Proyecto $proyecto)
     {
-        $proyecto->load(['clientePrincipal', 'responsable', 'clientes', 'staff']);
+        $proyecto->load(['clientePrincipal', 'responsable', 'clientes', 'staff', 'updater']);
 
         return Inertia::render('Proyectos/Show', [
             'proyecto' => $proyecto

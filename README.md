@@ -12,80 +12,14 @@ El panel principal proporciona un resumen y acceso rápido a las siguientes secc
 
 ## Instalación y Puesta en Marcha
 
-Sigue estos pasos para configurar el entorno de desarrollo local.
+Para una guía detallada de instalación y configuración, por favor consulta el archivo [**INSTRUCCIONES.md**](INSTRUCCIONES.md).
 
-### 1. Prerrequisitos
-
-*   PHP >= 8.0
-*   Composer
-*   Node.js & NPM
-*   Una base de datos MySQL
-
-### 2. Clonar el Repositorio
-
-```bash
-git clone <URL-del-repositorio>
-cd Alsina
-```
-
-### 3. Instalar Dependencias
-
-Instala las dependencias de PHP y JavaScript.
-
-```bash
-composer install
-npm install
-```
-
-### 4. Configuración del Entorno
-
-Copia el archivo de ejemplo para el entorno y genera la clave de la aplicación.
-
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-Abre el archivo `.env` y configura las credenciales de tu base de datos local:
-
-```dotenv
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=alsina
-DB_USERNAME=tu_usuario
-DB_PASSWORD=tu_password
-```
-
-### 5. Base de Datos
-
-Ejecuta las migraciones para crear la estructura de la base de datos y los seeders para poblarla con datos de ejemplo.
-
-```bash
-php artisan migrate:fresh --seed
-```
-Este comando creará todas las tablas y te dejará un usuario de prueba para que puedas ingresar.
-
-### 6. Iniciar los Servidores
-
-Necesitas dos procesos corriendo en terminales separadas:
-
-1.  **Servidor de Laravel:**
-    ```bash
-    php artisan serve
-    ```
-2.  **Servidor de Vite (Frontend):**
-    ```bash
-    npm run dev
-    ```
-
-### 7. Acceso a la Aplicación
-
-Una vez que los servidores estén corriendo, podrás acceder a la aplicación.
-
-*   **URL:** `http://127.0.0.1:8000` (o la que indique el comando `php artisan serve`).
-*   **Usuario:** `admin@admin.com`
-*   **Contraseña:** `password`
+Los pasos generales son:
+1.  Clonar el repositorio.
+2.  Instalar dependencias con `composer install` y `npm install`.
+3.  Configurar el archivo `.env`.
+4.  **Configurar la base de datos (ver INSTRUCCIONES.md para las opciones).**
+5.  Iniciar los servidores con `php artisan serve` y `npm run dev`.
 
 ## Guía de Estilo (Poncho)
 

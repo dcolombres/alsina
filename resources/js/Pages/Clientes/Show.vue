@@ -13,6 +13,14 @@ const breadcrumbItems = ref([
   { label: props.cliente.nombre, url: null },
 ]);
 
+const formatDateTime = (isoString) => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  const formattedDate = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long' }).format(date);
+  const formattedTime = new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false }).format(date);
+  return `${formattedDate} a las ${formattedTime}`;
+};
+
 </script>
 
 <template>
@@ -34,6 +42,9 @@ const breadcrumbItems = ref([
                         <div class="flex justify-between items-start">
                             <div>
                                 <h3 class="text-2xl font-bold text-gray-800">{{ cliente.nombre }} {{ cliente.apellido }}</h3>
+                                <p v-if="cliente.updater" class="text-xs text-gray-500">
+                                    Última actualización {{ formatDateTime(cliente.updated_at) }} por @{{ cliente.updater.name }}
+                                </p>
                                 <p class="mt-1 text-sm text-gray-600">{{ cliente.email }}</p>
                             </div>
                             <Link :href="route('clientes.edit', cliente.id)" class="ml-4 flex-shrink-0 bg-arg-azul hover:bg-arg-secundario text-white font-bold py-2 px-4 rounded">

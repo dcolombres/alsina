@@ -60,7 +60,7 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        $cliente->load(['proyectos', 'proyectosComoClientePrincipal']);
+        $cliente->load(['proyectos', 'proyectosComoClientePrincipal', 'updater']);
 
         return Inertia::render('Clientes/Show', [
             'cliente' => $cliente

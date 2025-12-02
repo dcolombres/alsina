@@ -55,27 +55,49 @@ Asegúrate de tener instalado el siguiente software en tu sistema:
 
 ## 3. Puesta en Marcha
 
-1.  **Ejecutar las migraciones:**
-    Para crear toda la estructura de tablas en la base de datos, ejecuta:
+Una vez configurado el entorno y las dependencias, tienes dos opciones para inicializar la base de datos.
+
+### Opción 1: Restaurar desde Backup (Recomendado)
+
+Este método cargará la base de datos con datos de producción actualizados, incluyendo proyectos, staff, clientes y usuarios pre-configurados.
+
+1.  **Crear una base de datos vacía:** Asegúrate de que la base de datos configurada en tu archivo `.env` (ej. `alsina`) exista y esté vacía.
+
+2.  **Importar el archivo de backup:** Ejecuta el siguiente comando en tu terminal. Reemplaza `[usuario]` y `[contraseña]` por tus credenciales de MySQL si es necesario. El archivo de backup es `alsina_backup_20251201.sql.gz`.
+
     ```bash
-    php artisan migrate:fresh
+    gunzip < alsina_backup_20251201.sql.gz | mysql -u [usuario] -p[contraseña] alsina
     ```
-    *(Se recomienda `migrate:fresh` para un entorno de desarrollo para asegurar un estado limpio de la base de datos, ya que borra todas las tablas antes de volver a crearlas).*
+    *(Nota: Si tu usuario no tiene contraseña, puedes omitir `-p[contraseña]` y el sistema te la pedirá, o si no hay clave, simplemente `-p` y presionar Enter).*
 
-2.  **Iniciar los servidores de desarrollo:**
-    Debes tener dos terminales abiertas para ejecutar los siguientes comandos concurrentemente.
+### Opción 2: Crear Base de Datos desde Cero
 
-    - En la **primera terminal**, inicia el servidor de Vite para el frontend (compila y actualiza los assets de Vue, CSS, etc.):
-      ```bash
-      npm run dev
-      ```
-    - En la **segunda terminal**, inicia el servidor de Laravel para el backend:
-      ```bash
-      php artisan serve
-      ```
+Este método creará la estructura de la base de datos y la llenará con datos de prueba básicos. Es útil para un entorno completamente limpio.
 
-## 4. Acceso a la Aplicación
+1.  **Ejecutar las migraciones y seeders:**
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+## 4. Iniciar los Servidores de Desarrollo
+
+Independientemente de la opción que hayas elegido para la base de datos, los siguientes pasos son los mismos. Debes tener dos terminales abiertas para ejecutar los siguientes comandos concurrentemente.
+
+- En la **primera terminal**, inicia el servidor de Vite para el frontend:
+  ```bash
+  npm run dev
+  ```
+- En la **segunda terminal**, inicia el servidor de Laravel para el backend:
+  ```bash
+  php artisan serve
+  ```
+
+## 5. Acceso a la Aplicación
 
 - **URL:** Una vez iniciados los servidores, la aplicación estará disponible en: **http://127.0.0.1:8000**
 
-- **Usuarios:** No hay usuarios creados por defecto. Debes utilizar la opción **"Register"** en la pantalla de login para crear tu propio usuario y poder acceder al sistema.
+- **Usuarios:**
+    - Si has restaurado la base de datos desde el backup (**Opción 1**), ya existen usuarios de prueba:
+        - **Administrador:** `admin@alsina.com` (contraseña: `password`)
+        - **Usuario Estándar:** `user@alsina.com` (contraseña: `password`)
+    - Si has creado la base de datos desde cero (**Opción 2**), no hay usuarios creados. Debes utilizar la opción **"Register"** en la pantalla de login para crear tu propio usuario.

@@ -36,6 +36,15 @@ const formatArray = (value) => {
     return value || 'N/A';
 };
 
+const formatDateTime = (isoString) => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  const formattedDate = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long' }).format(date);
+  const formattedTime = new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false }).format(date);
+  return `${formattedDate} a las ${formattedTime}`;
+};
+
+
 </script>
 
 <template>
@@ -58,6 +67,9 @@ const formatArray = (value) => {
                         <div class="flex justify-between items-start">
                             <div>
                                 <h3 class="text-2xl font-bold text-gray-800">{{ proyecto.nombre }}</h3>
+                                <p v-if="proyecto.updater" class="text-xs text-gray-500">
+                                    Última actualización {{ formatDateTime(proyecto.updated_at) }} por @{{ proyecto.updater.name }}
+                                </p>
                                 <p class="mt-1 text-sm text-gray-600">{{ proyecto.descripcion || 'Sin descripción.' }}</p>
                             </div>
                             <div class="flex space-x-2">

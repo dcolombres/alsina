@@ -72,7 +72,7 @@ class StaffController extends Controller
      */
     public function show(Staff $staff)
     {
-        $staff->load('proyectos');
+        $staff->load('proyectos', 'updater');
 
         return Inertia::render('Staff/Show', [
             'miembro' => $staff,

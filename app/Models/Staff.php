@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\User;
 
 class Staff extends Model
 {
@@ -54,5 +55,10 @@ class Staff extends Model
     public function proyectosComoResponsable()
     {
         return $this->hasMany(Proyecto::class, 'responsable_id');
+    }
+
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

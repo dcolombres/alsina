@@ -15,6 +15,14 @@ const breadcrumbItems = ref([
 
 const formatBoolean = (value) => value ? 'Sí' : 'No';
 
+const formatDateTime = (isoString) => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  const formattedDate = new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'long' }).format(date);
+  const formattedTime = new Intl.DateTimeFormat('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false }).format(date);
+  return `${formattedDate} a las ${formattedTime}`;
+};
+
 </script>
 
 <template>
@@ -36,6 +44,9 @@ const formatBoolean = (value) => value ? 'Sí' : 'No';
                         <div class="flex justify-between items-start">
                             <div>
                                 <h3 class="text-2xl font-bold text-gray-800">{{ miembro.nombre_apellido }}</h3>
+                                <p v-if="miembro.updater" class="text-xs text-gray-500">
+                                    Última actualización {{ formatDateTime(miembro.updated_at) }} por @{{ miembro.updater.name }}
+                                </p>
                                 <p class="mt-1 text-sm text-gray-600">{{ miembro.rol }} - {{ miembro.seniority }}</p>
                             </div>
                             <div class="flex space-x-2">

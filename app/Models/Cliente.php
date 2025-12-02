@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Cliente extends Model
 {
@@ -25,5 +26,10 @@ class Cliente extends Model
     public function proyectosComoClientePrincipal()
     {
         return $this->hasMany(Proyecto::class, 'cliente_id');
+    }
+
+    public function updater()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }
